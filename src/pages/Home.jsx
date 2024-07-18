@@ -12,7 +12,6 @@ function Home() {
       <MovieRow title="top rated" url={endpoints.topRated} />
       <MovieRow title="comedy" url={endpoints.comedy} />
       <MovieRow title="popular" url={endpoints.popular} />
-      <MovieRow />
     </>
   );
 }

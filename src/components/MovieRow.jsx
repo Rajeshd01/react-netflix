@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import MovieItem from "./MovieItem";
 
 const MovieRow = ({ title, url }) => {
   const [movies, setMovies] = useState([]);
@@ -17,20 +17,15 @@ const MovieRow = ({ title, url }) => {
       <div className="relative flex items-center">
         <div
           id={`slider`}
-          className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide"
+          className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide scroll"
         >
           {movies.map((movie) => (
-            <h1>{movie.title}</h1>
+            <MovieItem key={movie.id} movie={movie} />
           ))}
         </div>
       </div>
     </>
   );
-};
-
-MovieRow.propTypes = {
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
 };
 
 export default MovieRow;
