@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const Signup = () => {
   const [rememberLogin, setRememberLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleFormSubmit = (e) => {
+  const { signUp } = UserAuth(); // Correctly calling the hook
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    try {
+      await signUp(email, password);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
