@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext"; // Corrected import
 
 const Login = () => {
   const [rememberLogin, setRememberLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleFormSubmit = (e) => {
+  const { logIn } = UserAuth(); // Corrected hook usage
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    try {
+      await logIn(email, password);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -68,8 +76,8 @@ const Login = () => {
                   <p>Need Help?</p>
                 </div>
                 <p className="my-4">
-                  <span className="text-gray-600 mr-2">New to netflix?</span>
-                  <Link to="/src/pages/Signup.jsx">Signup</Link>
+                  <span className="text-gray-600 mr-2">New to Netflix?</span>
+                  <Link to="/signup">Signup</Link> {/* Corrected link */}
                 </p>
               </form>
             </div>
