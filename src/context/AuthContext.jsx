@@ -6,13 +6,13 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { auth } from "../services/firebase"; // Assuming 'db' isn't used
+import { auth, db } from "../services/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-  // Corrected 'childeren' to 'children'
-  const [user, setUser] = useState(null); // Set initial user to null
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -25,7 +25,10 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   function signUp(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password); // Ensure it returns a promise
+    createUserWithEmailAndPassword(auth, email, password);
+    setDoc(doc(db, "users", email), {
+      favShows: [],
+    });
   }
 
   function logIn(email, password) {
